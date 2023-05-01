@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-const List = ({
-  decrementProductHandler,
-  incrementProductHandler,
-  store,
-  removeProd,
-}) => {
-  const totalPrice = store.map((item) => {
+import { useShopContext } from "../contextState";
+
+const List = () => {
+  const { store = [], removeProduct, incProd, decProd } = useShopContext();
+  console.log(store, "store");
+
+  const totalPrice = store?.product.map((item) => {
     if (item.quantity === 0) {
       const result = { ...item, price: (item.price = 0) };
       return result.price;
@@ -28,7 +28,7 @@ const List = ({
             <p>Quantity</p>
             <p>Remove</p>
           </Thead>
-          {store.map((item, index) => {
+          {store.product.map((item, index) => {
             return (
               item.quantity !== 0 && (
                 <Tbody key={item.id}>
@@ -39,19 +39,15 @@ const List = ({
                   <div>{item.name}</div>
                   <div>{item.price} $</div>
                   <ContainerCount>
-                    <ButtonCount
-                      onClick={() => decrementProductHandler(item.id)}
-                    >
+                    <ButtonCount onClick={() => decProd(item.id)}>
                       -
                     </ButtonCount>
                     <span>{item.quantity}</span>
-                    <ButtonCount
-                      onClick={() => incrementProductHandler(item.id)}
-                    >
+                    <ButtonCount onClick={() => incProd(item.id)}>
                       +
                     </ButtonCount>
                   </ContainerCount>
-                  <ButtonRemove onClick={() => removeProd(item.id)}>
+                  <ButtonRemove onClick={() => removeProduct(item.id)}>
                     remove
                   </ButtonRemove>
                 </Tbody>

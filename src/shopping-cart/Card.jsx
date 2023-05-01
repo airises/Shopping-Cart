@@ -1,16 +1,19 @@
-import React from "react";
 import "./Card.css";
 import styled from "styled-components";
+import { useShopContext } from "../contextState";
+import { useState } from "react";
 
-function Card({ store, addProductHandler }) {
-  const enebled = store.map((el) => el.quantity < 0);
+function Card({}) {
+  const { store, addProd } = useShopContext();
+  // const [title,setTitle] = useState(false)
 
-  //   const disabled = enebled > 0;
+
+
 
   console.log(store);
   return (
     <div className="Main-card">
-      {store.map((el) => {
+      {store.product.map((el) => {
         return (
           <div key={el.id} className="card">
             <Images src={el.img} />
@@ -19,10 +22,10 @@ function Card({ store, addProductHandler }) {
             {el.quantity > 1 ? null : (
               <button
                 className="button"
-                onClick={() => addProductHandler(el.id)}
+                onClick={() => addProd(el.id)}
                 disabled={el.quantity > 0}
               >
-                Add
+             
               </button>
             )}
           </div>
